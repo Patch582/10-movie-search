@@ -1,4 +1,5 @@
 import movie_svc
+import requests.exceptions
 
 
 def print_header():
@@ -12,13 +13,22 @@ def search_event_loop():
 
     search = 'ONCE THROUGH LOOP'
     while search != 'x':
-        search = input('Movie search text (x to exit): ')
-        results = movie_svc.find_movies(search)
-        print("Found {} movies searching for '{}'".format(len(results), search))
-        for r in results:
-            print("{} -- {}".format(r.year, r.title))
+        try:
+            search = input('Movie search text (x to exit): ')
+            if search != 'x':
+                results = movie_svc.find_movies(search)
+                print("Found {} movies searching for '{}'".format(len(results), search))
+                for r in results:
+                    print("{} -- {}".format(r.year, r.title))
+        except ValueError as ve:
+            print('Error: {}'.format(ve))
+        except requests.exceptions.ConnectionError as ce:
+            print('Error: Your network is down: details: {}'.format(ce))
+        except Exception as x:
+            print('Unexpected Error: {}'.format(x))
 
     print('Exiting . . .')
+
 
 def main():
 
