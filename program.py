@@ -1,8 +1,21 @@
 import requests
 import collections
 
+MovieResult = collections.namedtuple(
+    'MovieResult',
+    "imdb_code,title,duration,director,year,rating,imdb_score,keywords,genre"
+)
+
+def print_header():
+    print('------------------------------------')
+    print('         Movie Search App')
+    print('------------------------------------')
+    print()
+
 
 def main():
+
+    print_header()
 
     # TODO: grab search key & set URL
     search = 'capital'
